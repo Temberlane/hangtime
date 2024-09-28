@@ -1,2 +1,23 @@
 {% extends "base.html" %}
 {% block title %}Input Schedule{% endblock %}
+
+{%  block content %}
+<form>
+    <label for="class">Class name:</label><br>
+    <input type="text" id="class" name="class"><br>
+    <label for="prof">Professor:</label><br>
+    <input type="text" id="prof" name="prof"><br>
+    <label for="day">Day of the week:</label><br>
+    <input type="date" id="day" name="day"><br>
+    <label for="stime">Start time:</label><br>
+    <input type="time" id="stime" name="stime"><br>
+    <label for="etime">End time:</label><br>
+    <input type="time" id="etime" name="etime"><br>
+    <input type="checkbox" id="biweekly" name="biweekly" value="biweekly">
+    <label for="biweekly"> Biweekly?</label><br>
+    <label for="type">Type:</label><br>
+    <input type="text" id="type" name="type"><br>
+    <input type="submit" value="Submit">
+
+</form>
+{% endblock %}
