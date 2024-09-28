@@ -4,4 +4,5 @@ def create_app():
     app = Flask(__name__)
 
     app.config['SECRET_KEY'] = 'asdadsaddasdd'
-    
+
+    return app
