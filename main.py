@@ -1,4 +1,12 @@
 import datetime
+from website import create_app
+
+# stuff to actually run the website below very important
+app = create_app()
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
 class lectures:
     def __init__(self, courseCode, instructor, startTime, endTime, date, profRating):
         self.courseCode = courseCode
