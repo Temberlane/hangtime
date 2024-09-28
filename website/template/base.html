@@ -20,7 +20,7 @@
     <body>
 
 
-        
+
     <!-- make sure these scripts stay at the bottom of the body tag -->
         <script
         src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -38,5 +38,10 @@
         crossorigin="anonymous"
       ></script>
   
+        <script
+            type="text/javascript"
+            src="{{ url_for('static', filename='index.js')}}"
+        ></script>
+
     </body>
 </html>
