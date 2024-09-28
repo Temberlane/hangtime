@@ -2,6 +2,7 @@
 {% block title %}Input Schedule{% endblock %}
 
 
+
 {%  block content %}
 <form method="post">
     <label for="class">Course code:</label><br>
@@ -10,48 +11,32 @@
     <input type="text" id="prof" name="prof"><br>
     <div id="section-container">
 
-    <h3>Section 1</h3>
-     <label for="type">Choose the type:</label>
-<select id="type" name="type">
-  <option value="Lecture">Lecture</option>
-  <option value="Lab">Lab</option>
-  <option value="Tutorial">Tutorial</option>
-  <option value="Other">Other</option>
-</select><br>
-    <label for="day">Day of the week:</label><br>
-    <input type="date" id="day" name="day"><br>
-    <label for="stime">Start time:</label><br>
-    <input type="time" id="stime" name="stime"><br>
-    <label for="etime">End time:</label><br>
-    <input type="time" id="etime" name="etime"><br>
-    <input type="checkbox" id="biweekly" name="biweekly" value="biweekly">
-    <label for="biweekly"> Biweekly?</label><br>
-    <input type="submit" value="Submit">
     </div>
-<a href="javascript:;" id="add-new-section">Add another section</a>
+<input type="button" onclick=addSection() value="Add section">
+    <input type="submit" value="Submit">
 
 </form>
+
 <!-- code for adding row from: https://mattstauffer.com/blog/a-little-trick-for-grouping-fields-in-an-html-form/ -->
-    <script>
-let i = 2;
-document.getElementById('add-new-section').onclick = function () {
+<script>
+    let i = 1;
+function addSection () {
     let template = `<h3>Section ${i}</h3>
      <label for="type">Choose the type:</label>
-<select id="type" name="type">
+<select id="type" name="sections[${i}][type]">
   <option value="Lecture">Lecture</option>
   <option value="Lab">Lab</option>
   <option value="Tutorial">Tutorial</option>
   <option value="Other">Other</option>
 </select><br>
     <label for="day">Day of the week:</label><br>
-    <input type="date" id="day" name="day"><br>
+    <input type="date" id="day" name="sections[${i}][day]"><br>
     <label for="stime">Start time:</label><br>
-    <input type="time" id="stime" name="stime"><br>
+    <input type="time" id="stime" name="sections[${i}][stime]"><br>
     <label for="etime">End time:</label><br>
-    <input type="time" id="etime" name="etime"><br>
-    <input type="checkbox" id="biweekly" name="biweekly" value="biweekly">
-    <label for="biweekly"> Biweekly?</label><br>
-    <input type="submit" value="Submit">`;
+    <input type="time" id="etime" name="sections[${i}][etime]"><br>
+    <input type="checkbox" id="biweekly" name="sections[${i}][biweekly]" value="biweekly">
+    <label for="biweekly"> Biweekly?</label><br>`;
 
     let container = document.getElementById('section-container');
     let div = document.createElement('div');
@@ -61,4 +46,6 @@ document.getElementById('add-new-section').onclick = function () {
     i++;
 }
     </script>
+
+<script>addSection()</script>
 {% endblock %}
