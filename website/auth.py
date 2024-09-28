@@ -14,6 +14,6 @@ def logout():
 def sign_up():
     return "<p>Sign up</p>"
 
-@auth.route('/add-schedule')
-def schedule_add():
-    return render_template("input_schedule.html")
+@auth.route('/add-class')
+def class_add():
+    return render_template("add_class.html")
