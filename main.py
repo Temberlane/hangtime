@@ -1,9 +1,13 @@
 import datetime
-from datetime import timedelta
 #Uses rate my professor module
 import ratemyprofessor
+from website import create_app
 
+# stuff to actually run the website below very important
+app = create_app()
 
+if __name__ == '__main__':
+    app.run(debug=True)
 
 class lectures:
     def __init__(self, courseCode, instructor, startTime, endTime, profRating):
