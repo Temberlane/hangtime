@@ -1,11 +1,31 @@
 {% extends "base.html" %}
+
 {% block title %}Input Schedule{% endblock %}
+{% block css %}
+label {font-size: large; color: black;}
+div {text-align: center;}
+input {
+  width: 100%;
+    background-color: #C5C5C5;
+border-style:solid
+
+}
+input[type="checkbox"]{
+    width: 5%;}
+h5 {padding-top:  30px;
+    text-align: center;}
+input[type="button"]{
+margin-bottom: 15px;
+background-color: #a3dce3;
+}
+{% endblock %}
+
 
 {%  block content %}
 <form method="post">
-    <label for="class">Course code:</label><br>
+    <label for="class">Course code</label><br>
     <input type="text" id="class" name="class"><br>
-    <label for="prof">Professor:</label><br>
+    <label for="prof">Professor</label><br>
     <input type="text" id="prof" name="prof"><br>
     <div id="section-container">
     </div>
@@ -19,7 +39,7 @@
     let i = 0;
 function addSection () {
     let template = `<div id="section ${i}">
-<h3>Section ${i+1} </h3> <input type="button" onclick=removeSection(this) value="Remove section" name="${i}"> <br>
+<h5>Section ${i+1}</h5> <input type="button" onclick=removeSection(this) value="Remove section" name="${i}"> <br>
      <label for="type">Choose the type:</label>
 <select id="type" name="sections[${i}][type]">
   <option value="Lecture">Lecture</option>
@@ -70,8 +90,9 @@ function addSection () {
 
 
                     }
-                    var section = div.querySelector("h3");
+                    var section = div.querySelector("h5");
                     if (section) {
+
                         section.innerText = `Section ${section_id}`;
 
                     }
