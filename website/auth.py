@@ -31,6 +31,6 @@ def sign_up():
             # add user to database
     return render_template("sign_up.html")
 
-@auth.route('/add-schedule')
-def schedule_add():
-    return render_template("input_schedule.html")
+@auth.route('/add-class')
+def class_add():
+    return render_template("add_class.html")
