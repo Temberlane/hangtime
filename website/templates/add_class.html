@@ -24,9 +24,9 @@ background-color: #a3dce3;
 {%  block content %}
 <form method="post">
     <label for="class">Course code</label><br>
-    <input type="text" id="class" name="class"><br>
+    <input type="text" id="class" name="class" required><br>
     <label for="prof">Professor</label><br>
-    <input type="text" id="prof" name="prof"><br>
+    <input type="text" id="prof" name="prof" required><br>
     <div id="section-container">
     </div>
     <input type="button" onclick=addSection() value="Add section">
@@ -41,7 +41,7 @@ function addSection () {
     let template = `<div id="section ${i}">
 <h5>Section ${i+1}</h5> <input type="button" onclick=removeSection(this) value="Remove section" name="${i}"> <br>
      <label for="type">Choose the type:</label>
-<select id="type" name="sections[${i}][type]">
+<select id="type" name="sections[${i}][type]" required>
   <option value="Lecture">Lecture</option>
   <option value="Lab">Lab</option>
   <option value="Tutorial">Tutorial</option>
@@ -49,15 +49,15 @@ function addSection () {
 </select><br>
 
     <label for="day">Day of the week:</label><br>
-    <input type="date" id="day" name="sections[${i}][day]"><br>
+    <input type="date" id="day" name="sections[${i}][day]" required><br>
 
     <label for="stime">Start time:</label><br>
-    <input type="time" id="stime" name="sections[${i}][stime]"><br>
+    <input type="time" id="stime" name="sections[${i}][stime]" required><br>
 
     <label for="etime">End time:</label><br>
-    <input type="time" id="etime" name="sections[${i}][etime]"><br>
+    <input type="time" id="etime" name="sections[${i}][etime]" required><br>
 
-    <input type="checkbox" id="biweekly" name="sections[${i}][biweekly]" value="biweekly">
+    <input type="checkbox" id="biweekly" name="sections[${i}][biweekly]" value="biweekly" required>
     <label for="biweekly"> Biweekly?</label><br></div>`;
 
     let container = document.getElementById('section-container');
