@@ -71,4 +71,4 @@ def logout():
 
 @auth.route('/add-class')
 def class_add():
-    return render_template("add_class.html")
+    return render_template("add_class.html",user=current_user)
