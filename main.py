@@ -50,8 +50,8 @@ class lectureAddtives(lectures):
         def __str__(self):
             return f"This is a lecture additive for {self.courseCode} taught by {self.instructor}."
 
-startTime1 = datetime.datetime(2024, 7, 18, 5, 4, 20)
-endTime1 = datetime.datetime(2024, 7, 18, 6, 4, 20)
+# startTime1 = datetime.datetime(2024, 7, 18, 5, 4, 20)
+# endTime1 = datetime.datetime(2024, 7, 18, 6, 4, 20)
 
-lec1 = lectures("CHM1311", "Vida Dujmovic", startTime1, endTime1,  5.0)
-lec1.setProfRating()
+# lec1 = lectures("CHM1311", "Vida Dujmovic", startTime1, endTime1,  5.0)
+# lec1.setProfRating()
