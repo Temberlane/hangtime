@@ -15,7 +15,8 @@
             class="form-control"
             id="email"
             name="email"
-            placeholder="Enter email"
+            placeholder="Enter Email"
+            value="{{form_data.get('email') if form_data else ''}}"
             required
           />
         </div>
@@ -27,6 +28,7 @@
             id="firstName"
             name="firstName"
             placeholder="Enter first name"
+            value="{{form_data.get('firstName') if form_data else ''}}"
             required
           />
         </div>
