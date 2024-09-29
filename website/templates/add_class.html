@@ -5,7 +5,7 @@
 label {font-size: large; color: black;}
 input {
   width: 90%;
-    background-color: #C5C5C5;
+    background-color: #FFFFFFF;
 border-style:solid;
 margin-bottom: 15px;
 border-radius: 5px;
@@ -49,7 +49,7 @@ padding: 12 px}
     <input type="text" id="prof" name="prof" required ><br>
     <input type="hidden" id="sectioncount" name="sections" value=0>
     <label for="color">Color</label>
-    <input type="color" id="color" name = "color" onchange="colorChange(this.value)" value = "#90e4f9">
+    <input type="color" id="color" name = "color" onchange="colorChange(this.value)" value = "#90e4f9" style="border: 2px solid #FFFFFF">
     <div id="section-container">
     </div>
     <input type="button" onclick=addSection() value="Add section" name="add section">
@@ -82,22 +82,22 @@ function addSection () {
   <option value="Other">Other</option>
 </select><br>
     <label for="${i}/location">Location</label><br>
-    <input type="text" id="${i}/location" name="${i}/location" style="background-color: ${colors[3]}; border: ${colors[4]}"><br>
+    <input type="text" id="${i}/location" name="${i}/location" style="border: 2px solid ${colors[2]}"><br>
 
     <label for="${i}/room">Room</label><br>
-    <input type="text" id="${i}/room" name="${i}/room" style="background-color: ${colors[3]}; border: ${colors[4]}"><br>
+    <input type="text" id="${i}/room" name="${i}/room" style="border: 2px solid ${colors[2]}"><br>
 
     <label for="${i}/fday" class="required">First day</label><br>
-    <input type="date" id="${i}/fday" name="${i}/fday" required style="background-color: ${colors[3]}; border: ${colors[4]}"><br>
+    <input type="date" id="${i}/fday" name="${i}/fday" required style="border: 2px solid ${colors[2]}"><br>
 
     <label for="${i}/lday" class="required">Last day</label><br>
-    <input type="date" id="${i}/lday" name="${i}/lday" required style="background-color: ${colors[3]}; border: ${colors[4]}"><br>
+    <input type="date" id="${i}/lday" name="${i}/lday" required style="border: 2px solid ${colors[2]}"><br>
 
     <label for="${i}/stime" class="required">Start time</label><br>
-    <input type="time" id="${i}/stime" name="${i}/stime" required style="background-color: ${colors[3]}; border: ${colors[4]}"><br>
+    <input type="time" id="${i}/stime" name="${i}/stime" required style="border: 2px solid ${colors[2]}"><br>
 
     <label for="${i}/etime" class="required">End time</label><br>
-    <input type="time" id="${i}/etime" name="${i}/etime" required style="background-color: ${colors[3]}; border: ${colors[4]}"><br>
+    <input type="time" id="${i}/etime" name="${i}/etime" required style="border: 2px solid ${colors[2]}"><br>
 
     <input type="checkbox" id="${i}/biweekly" name="${i}/biweekly" value=true>
     <label for="biweekly"> Biweekly?</label><br>`;
@@ -197,8 +197,8 @@ function addSection () {
                 var inputs = div.children
                 for (const j of inputs) {
                         if (j.name && (j.name.length) > 1) {
-                            j.style.backgroundColor = input_hsl
-                            j.style.border = `2px solid ${inputb_hsl}`
+                            j.style.backgroundColor = "#FFFFFF"
+                            j.style.border = `2px solid ${bu_hsl}`
                         }
 
 
