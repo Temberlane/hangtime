@@ -61,90 +61,70 @@ padding: 12 px}
 <script>
     let i = 0;
     let a = true;
-    var data = {{ form_data | tojson }}
 function addSection () {
-    if(a && !data){
-        colors = colorChange('#9BE5F8')
+    if(a) {
+        colors = colorChange('#9BE5F8');
         a = false;
     }
-    else if(a){
-        colors = colorChange(data['color'])
-    }
     else{
-        color_input = document.getElementById("color")
-        colors = colorChange(color_input.value)
-    }
-    let container = document.getElementById('section-container');
-    let type = data[i.toString()+'/type'];
-    let location = data[i.toString()+'/location'];
-    let room = data[i.toString()+'/room'];
-    let fday = data[i.toString()+'/fday'];
-    let lday = data[i.toString()+'/lday'];
-    let stime = data[i.toString()+'/stime'];
-    let etime =data[i.toString()+'/etime'];
-    let biweekly = data[i.toString()+'/biweekly'];
+            color_input = document.getElementById("color")
+            colors = colorChange(color_input.value)
+        }
+        let container = document.getElementById('section-container');
 
-    let template =
-    `<div id="section ${i}" style="border:2px solid ${colors[0]}; border-radius: 25px; background-color: ${colors[1]}; margin-bottom: 15px">
-<h5 style="display: inline;">Section ${i+1} </h5> <input type="button" onclick=removeSection(this) value="Remove section" name="${i}" style="width: fit-content; background-color: ${colors[2]}" > <br>
+        let template =
+            `<div id="section ${i}" style="border:2px solid ${colors[0]}; border-radius: 25px; background-color: ${colors[1]}; margin-bottom: 15px">
+<h5 style="display: inline;">Section ${i + 1} </h5> <input type="button" onclick=removeSection(this) value="Remove section" name="${i}" style="width: fit-content; background-color: ${colors[2]}" > <br>
      <label for="type" class="required">Choose the type:</label>
 <select id="type" name="${i}/type" style="background-color: #FFFFFF;" required>
   <option value="Lecture">Lecture</option>
-  <option value="Lab" selected=${(type === "Lab")}>Lab</option>
-  <option value="Tutorial" selected=${(type === "Tutorial")}>Tutorial</option>
-  <option value="Other" selected=${type==="Other"}>Other</option>
+  <option value="Lab">Lab</option>
+  <option value="Tutorial">Tutorial</option>
+  <option value="Other">Other</option>
 </select><br>
     <label for="${i}/location">Location</label><br>
-    <input type="text" id="${i}/location" name="${i}/location" style="border: 2px solid ${colors[2]}" value=${location !== null ? location: ''}><br>
+    <input type="text" id="${i}/location" name="${i}/location" style="border: 2px solid ${colors[2]}"><br>
 
     <label for="${i}/room">Room</label><br>
-    <input type="text" id="${i}/room" name="${i}/room" value=${room !== null ? room: ''} style="border: 2px solid ${colors[2]}" ><br>
+    <input type="text" id="${i}/room" name="${i}/room" style="border: 2px solid ${colors[2]}" ><br>
 
     <label for="${i}/fday" class="required">First day</label><br>
-    <input type="date" id="${i}/fday" name="${i}/fday" required value=${fday !== null ? fday: ''} style="border: 2px solid ${colors[2]}" ><br>
+    <input type="date" id="${i}/fday" name="${i}/fday" required style="border: 2px solid ${colors[2]}" ><br>
 
     <label for="${i}/lday" class="required">Last day</label><br>
-    <input type="date" id="${i}/lday" name="${i}/lday" required value=${lday !== null ? lday: ''} style="border: 2px solid ${colors[2]}" ><br>
+    <input type="date" id="${i}/lday" name="${i}/lday" required style="border: 2px solid ${colors[2]}" ><br>
 
     <label for="${i}/stime" class="required">Start time</label><br>
-    <input type="time" id="${i}/stime" name="${i}/stime" value=${stime !== null ? stime: ''} required style="border: 2px solid ${colors[2]}" ><br>
+    <input type="time" id="${i}/stime" name="${i}/stime"  required style="border: 2px solid ${colors[2]}" ><br>
 
     <label for="${i}/etime" class="required">End time</label><br>
-    <input type="time" id="${i}/etime" name="${i}/etime" required value=${etime !== null ? etime: ''} style="border: 2px solid ${colors[2]}"  ><br>
+    <input type="time" id="${i}/etime" name="${i}/etime" required style="border: 2px solid ${colors[2]}"  ><br>
 
-    <input type="checkbox" id="${i}/biweekly" name="${i}/biweekly" value=true checked=${biweekly !== null ? 'checked': ''}>
+    <input type="checkbox" id="${i}/biweekly" name="${i}/biweekly" value=true >
     <label for="biweekly"> Biweekly?</label><br>`;
-    let div = document.createElement('div');
-    div.innerHTML = template;
-    container.appendChild(div);
-    h = document.getElementById('sectioncount');
-    h.value=parseInt(h.value)+1;
+        let div = document.createElement('div');
+        div.innerHTML = template;
+        container.appendChild(div);
+        h = document.getElementById('sectioncount');
+        h.value = parseInt(h.value) + 1;
 
-    i++;
-}
-    if(data){
-        console.log("{{form_data['sections'][0]}}")
-        for (let j = 0; j < "{{form_data['sections'][0]}}"; j++) {
-            addSection()
-        }
+        i++;
     }
-    else {
-        addSection()
-    }
+    addSection()
 
     function removeSection(k) {
-    i--;
-    h = document.getElementById('sectioncount');
-    h.value=parseInt(h.value)-1;
-            let value = document.getElementById(`section ${k.name}`);
+        i--;
+        h = document.getElementById('sectioncount');
+        h.value = parseInt(h.value) - 1;
+        let value = document.getElementById(`section ${k.name}`);
         value.remove();
 
-    var divs = document.getElementsByTagName("div");
+        var divs = document.getElementsByTagName("div");
         var descendants;
         for (const div of divs) {
             if (div.id.includes("section") && div.id !== "section-container") {
                 section_id = parseInt(div.id.split(" ")[1]);
-                if(section_id >= i) {
+                if (section_id >= i) {
                     descendants = div.children
                     for (const j of descendants) {
                         if (j.name && (j.name.length) > 1) {
@@ -165,8 +145,9 @@ function addSection () {
         }
 
 
-}
-/* hex to rgb from https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb*/
+    }
+
+    /* hex to rgb from https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb*/
     function hexToRgb(hex) {
         var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
         return result ? {
@@ -177,34 +158,34 @@ function addSection () {
     }
 
     /* rgb to hsl from https://www.30secondsofcode.org/js/s/rgb-hex-hsl-hsb-color-format-conversion/ */
-        function rgbToHsl(a) {
-            r = a['r']/255;
-            g = a['g']/255;
-            b = a['b']/255;
-            const l = Math.max(r, g, b);
-            const s = l - Math.min(r, g, b);
-            const h = s
-                ? l === r
-                    ? (g - b) / s
-                    : l === g
-                        ? 2 + (b - r) / s
-                        : 4 + (r - g) / s
-                : 0;
-            return [
-                60 * h < 0 ? 60 * h + 360 : 60 * h,
-                100 * (s ? (l <= 0.5 ? s / (2 * l - s) : s / (2 - (2 * l - s))) : 0),
-                (100 * (2 * l - s)) / 2,
-            ];
-        };
+    function rgbToHsl(a) {
+        r = a['r'] / 255;
+        g = a['g'] / 255;
+        b = a['b'] / 255;
+        const l = Math.max(r, g, b);
+        const s = l - Math.min(r, g, b);
+        const h = s
+            ? l === r
+                ? (g - b) / s
+                : l === g
+                    ? 2 + (b - r) / s
+                    : 4 + (r - g) / s
+            : 0;
+        return [
+            60 * h < 0 ? 60 * h + 360 : 60 * h,
+            100 * (s ? (l <= 0.5 ? s / (2 * l - s) : s / (2 - (2 * l - s))) : 0),
+            (100 * (2 * l - s)) / 2,
+        ];
+    };
 
     function colorChange(c) {
         const rgb = hexToRgb(c)
         const hsl = rgbToHsl(rgb);
-        const b_hsl =  `hsl(${hsl[0]}, ${Math.round(hsl[1])+12}%, ${Math.round(hsl[2])+12}%)`
-        const bu_hsl = `hsl(${hsl[0]}, ${Math.round(hsl[1])+12}%, ${Math.round(hsl[2])+4}%)`
-        const s_hsl =  `hsl(${hsl[0]}, ${Math.round(hsl[1])}%, ${Math.round(hsl[2])}%)`
-        const input_hsl = `hsl(${hsl[0]}, ${Math.round(hsl[1])-30}%, ${Math.round(hsl[2])+8}%)`
-        const inputb_hsl = `hsl(${hsl[0]}, ${Math.round(hsl[1])-45}%, ${Math.round(hsl[2])+10}%)`
+        const b_hsl = `hsl(${hsl[0]}, ${Math.round(hsl[1]) + 12}%, ${Math.round(hsl[2]) + 12}%)`
+        const bu_hsl = `hsl(${hsl[0]}, ${Math.round(hsl[1]) + 12}%, ${Math.round(hsl[2]) + 4}%)`
+        const s_hsl = `hsl(${hsl[0]}, ${Math.round(hsl[1])}%, ${Math.round(hsl[2])}%)`
+        const input_hsl = `hsl(${hsl[0]}, ${Math.round(hsl[1]) - 30}%, ${Math.round(hsl[2]) + 8}%)`
+        const inputb_hsl = `hsl(${hsl[0]}, ${Math.round(hsl[1]) - 45}%, ${Math.round(hsl[2]) + 10}%)`
 
         var divs = document.getElementsByTagName("div");
         for (const div of divs) {
@@ -216,23 +197,24 @@ function addSection () {
                 button.style.backgroundColor = bu_hsl
                 var inputs = div.children
                 for (const j of inputs) {
-                        if (j.name && (j.name.length) > 1) {
-                            j.style.backgroundColor = "#FFFFFF"
-                            j.style.border = `2px solid ${bu_hsl}`
-                        }
-
-
+                    if (j.name && (j.name.length) > 1) {
+                        j.style.backgroundColor = "#FFFFFF"
+                        j.style.border = `2px solid ${bu_hsl}`
                     }
 
+
+                }
+
             }
-        button =  document.getElementsByName('add section')[0]
+            button = document.getElementsByName('add section')[0]
             button.style.backgroundColor = bu_hsl
 
 
         }
         return [s_hsl, b_hsl, bu_hsl, input_hsl, inputb_hsl]
-    }
 
+
+}
 
 </script>
 {% endblock %}
