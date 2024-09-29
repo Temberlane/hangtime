@@ -1,27 +1,33 @@
 {% extends "base.html" %}
 
-<head>
-   
-   {% block title %} Adapted Schedule {% endblock %}
-   {% block css %}
+{% block title %} Adapted Schedule {% endblock %}
+{% block css %}
 
-      #day {
-         text-align: center;
-         font-size: 130%;
-         width: 13%;
-         background-color: rgb(106, 108, 116);
-         border: 2px solid black;
-         border-left-width: 1px;
-         border-right-width: 1px;
-      }
+   #day {
+      text-align: center;
+      font-size: 130%;
+      width: 13%;
+      background-color: rgb(106, 108, 116);
+      border: 2px solid black;
+      border-left-width: 1px;
+      border-right-width: 1px;
+   }
 
-      #event {
-         font-size: auto;
-      }
+   #div {
+      text-align: center;
+      font-size: auto;
+      width: 13%;
+      height: 5%
+      background-color: #E8E8E8;
+      border: 2px solid light-grey;
+      border-left-width: 1px;
+      border-right-width: 1px;
+   }
 
 
-   {% endblock %}
-</head>
+{% endblock %}
+
+
 
 {% block content %}
 
@@ -35,6 +41,72 @@
       <strong id = "day"; style="border-right-width: 2px;">Saturday</strong>
    </span>
 
-   
-
 {% endblock %}
+
+<script>
+   function event_to_calender(event) {
+      if (event != null) {
+         document.append.body(<div style="background-color: ${event.color}">event.details</div>)
+      }
+
+      else {
+         document.body.append(<div></div>)
+      }
+   }
+
+
+   var earliest_time = 8;
+   var latest_time = 15;
+   for (let i = earliest_time; i < latest_time;) {
+      var Sunday = null
+      var Monday = null
+      var Tuesday = null
+      var Thursday = null
+      var Friday = null
+      var Saturday = null
+
+
+      for (let event in events) {
+         if (event.time == i){
+
+            if (event.day == "Sunday") {
+               Sunday = event
+            }
+            else if (event.day == "Monday") {
+               Monday = event
+            }
+            else if (event.day == "Tuesday") {
+               Tuesday = event
+            }
+            else if (event.day == "Wednesday") {
+               Wednesday = event
+            }
+            else if (event.day == "Thursday") {
+               Thursday = event
+            }
+            else if (event.day == "Sunday") {
+               Sunday = event
+            }
+            else {
+               Sunday = event
+            }
+         }
+
+      }
+
+      document.body.append(<span style="display: flex"> event_to_calender(Sunday);
+      event_to_calender(Monday);
+      event_to_calender(Tuesday);
+      event_to_calender(Wednesday);
+      event_to_calender(Thursday);
+      event_to_calender(Friday);
+      event_to_calender(Saturday);
+      </span>)
+      
+
+      i = i + 0.5;
+   }
+
+
+
+</script>
