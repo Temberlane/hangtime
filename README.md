@@ -6,3 +6,4 @@
 - flask_sqlalchemy
 - sqlalchemy
 - werkzeug
+- ratemyprofessorAPI
