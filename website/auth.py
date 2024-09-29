@@ -120,6 +120,7 @@ def class_add():
             return redirect(url_for('views.home'))
         else:
             flash(m, category='error')
+            return render_template("add_class.html", user=current_user, form_data=request.form)
     return render_template("add_class.html", user=current_user)
 
 @auth.route('/add-events',methods=['GET', 'POST'])
@@ -149,6 +150,9 @@ def event_add():
                 repeats = request.form.get(f"{i}/repeats")
                 notes = request.form.get(f"{i}/notes")
             return redirect(url_for('views.home'))
+        else:
+
+            return render_template("add_events.html", user=current_user, form_data=request.form)
     return render_template("add_events.html", user=current_user)
 
 
