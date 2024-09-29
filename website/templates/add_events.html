@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}Input Events{% endblock %}
+{% block css %}
+label {font-size: large; color: black;}
+div {text-align: center;}
+input {
+  width: 100%;
+    background-color: #C5C5C5;
+border-style:solid;
+margin-bottom: 15px;
+
+}
+input[type="checkbox"]{
+    width: 5%;}
+h5 {padding-top:  30px;
+    text-align: center;}
+input[type="button"]{
+margin-bottom: 15px;
+background-color: #a3dce3;
+}
+{% endblock %}
+
+{%  block content %}
+<form method="POST">
+    <input type="hidden" id="sectioncount" name="sections" value=0>
+    <div id="section-container">
+    </div>
+    <input type="button" onclick=addSection() value="Add event">
+    <input type="submit" value="Submit">
+
+</form>
+
+<!-- code for adding row from: https://mattstauffer.com/blog/a-little-trick-for-grouping-fields-in-an-html-form/ -->
+<script>
+    let i = 0;
+function addSection () {
+    let template = `<div id="Event ${i}">
+<h5>Event ${i+1}</h5> <input type="button" onclick=removeSection(this) value="Remove section" name="${i}"> <br>
+
+    <label for="${i}/start">Start</label><br>
+    <input type="datetime-local" id="${i}/start" name="${i}/start" required><br>
+
+    <label for="${i}/end">End</label><br>
+    <input type="datetime-local" id="${i}/end" name="${i}/end" required><br>
+
+    <label for="${i}/repeats"> Repeats?</label>
+<select id="${i}/repeats" name="${i}/repeats" required>
+  <option value="None">Does Not Repeat</option>
+  <option value="Daily">Daily</option>
+  <option value="Weekly">Weekly</option>
+  <option value="Monthly">Monthly</option>
+
+  </select></br>
+
+  <br><label for="${i}/notes">Notes</label><br>
+    <input type="text-local" id="${i}/notes" name="${i}/notes" ><br>
+</div>`;
+
+    let container = document.getElementById('section-container');
+    let div = document.createElement('div');
+    div.innerHTML = template;
+    container.appendChild(div);
+    h = document.getElementById('sectioncount');
+    h.value=parseInt(h.value)+1;
+
+    i++;
+}
+
+    addSection()
+
+    function removeSection(k) {
+    i--;
+    h = document.getElementById('sectioncount');
+    h.value=parseInt(h.value)-1;
+            let value = document.getElementById(`section ${k.name}`);
+        value.remove();
+
+    var divs = document.getElementsByTagName("div");
+        var descendants;
+        for (const div of divs) {
+            if (div.id.includes("section") && div.id !== "section-container") {
+                section_id = parseInt(div.id.split(" ")[1]);
+                if(section_id >= i) {
+                    descendants = div.children
+                    for (const j of descendants) {
+                        if (j.name && (j.name.length) > 1) {
+                            var type = j.getAttribute("name").split("/")[1];
+                            j.setAttribute("name", `${section_id - 1}/${type}`)
+                        }
+
+
+                    }
+                    var section = div.querySelector("h5");
+                    if (section) {
+
+                        section.innerText = `Section ${section_id}`;
+
+                    }
+                }
+            }
+        }
+
+    }
+
+
+</script>
+{% endblock %}
