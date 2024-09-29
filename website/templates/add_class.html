@@ -33,16 +33,20 @@ div{
 text-align: center;
 padding: 12 px}
 
-
+/* code for required asterisk from: https://stackoverflow.com/questions/11197671/use-css-to-automatically-add-required-field-asterisk-to-form-inputs */
+.required:after {
+    content:" *";
+    color: red;
+  }
 {% endblock %}
 
 
 {%  block content %}
 <form method="POST">
-    <label for="class">Course code</label><br>
+    <label for="class" class="required">Course code</label><br>
     <input type="text" id="class" name="class" required><br>
-    <label for="prof">Professor</label><br>
-    <input type="text" id="prof" name="prof" required><br>
+    <label for="prof" class="required">Professor</label><br>
+    <input type="text" id="prof" name="prof" required ><br>
     <input type="hidden" id="sectioncount" name="sections" value=0>
     <label for="color">Color</label>
     <input type="color" id="color" name = "color" onchange="colorChange(this.value)" value = "#90e4f9">
@@ -70,7 +74,7 @@ function addSection () {
 
     let template = `<div id="section ${i}" style="border:2px solid ${colors[0]}; border-radius: 25px; background-color: ${colors[1]}; margin-bottom: 15px">
 <h5 style="display: inline;">Section ${i+1} </h5> <input type="button" onclick=removeSection(this) value="Remove section" name="${i}" style="width: fit-content; background-color: ${colors[2]}" > <br>
-     <label for="type">Choose the type:</label>
+     <label for="type" class="required">Choose the type:</label>
 <select id="type" name="${i}/type" style="background-color: ${colors[2]};" required>
   <option value="Lecture">Lecture</option>
   <option value="Lab">Lab</option>
@@ -83,16 +87,16 @@ function addSection () {
     <label for="${i}/room">Room</label><br>
     <input type="text" id="${i}/room" name="${i}/room" style="background-color: ${colors[3]}; border: ${colors[4]}"><br>
 
-    <label for="${i}/fday">First day</label><br>
+    <label for="${i}/fday" class="required">First day</label><br>
     <input type="date" id="${i}/fday" name="${i}/fday" required style="background-color: ${colors[3]}; border: ${colors[4]}"><br>
 
-    <label for="${i}/lday">Last day</label><br>
+    <label for="${i}/lday" class="required">Last day</label><br>
     <input type="date" id="${i}/lday" name="${i}/lday" required style="background-color: ${colors[3]}; border: ${colors[4]}"><br>
 
-    <label for="${i}/stime">Start time</label><br>
+    <label for="${i}/stime" class="required">Start time</label><br>
     <input type="time" id="${i}/stime" name="${i}/stime" required style="background-color: ${colors[3]}; border: ${colors[4]}"><br>
 
-    <label for="${i}/etime">End time</label><br>
+    <label for="${i}/etime" class="required">End time</label><br>
     <input type="time" id="${i}/etime" name="${i}/etime" required style="background-color: ${colors[3]}; border: ${colors[4]}"><br>
 
     <input type="checkbox" id="${i}/biweekly" name="${i}/biweekly" value=true>

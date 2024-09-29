@@ -31,6 +31,11 @@ div{
 text-align: center;
 padding-top: 50 px
 margin: 15px}
+
+.required:after {
+    content:" *";
+    color: red;
+  }
 {% endblock %}
 
 {%  block content %}
@@ -53,13 +58,13 @@ function addSection () {
 <br><h5 style="display: inline;">Event ${i + 1} </h5> <input type="button" onclick=removeSection(this) value="Remove section" name="${i}" style="width: fit-content; background-color: black" > <br>
     <label for="${i}/location">Location</label><br>
     <input type="text" id="${i}/location" name="${i}/location"><br>
-    <label for="${i}/start">Start</label><br>
+    <label for="${i}/start" class="required">Start</label><br>
     <input type="datetime-local" id="${i}/start" name="${i}/start" required><br>
 
-    <label for="${i}/end">End</label><br>
+    <label for="${i}/end" class="required">End</label><br>
     <input type="datetime-local" id="${i}/end" name="${i}/end" required><br>
 
-    <label for="${i}/repeats"> Repeats?</label>
+    <label for="${i}/repeats" class="required"> Repeats?</label>
 <select id="${i}/repeats" name="${i}/repeats" required>
   <option value="None">Does Not Repeat</option>
   <option value="Daily">Daily</option>
