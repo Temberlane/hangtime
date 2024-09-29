@@ -29,7 +29,8 @@ background-color: #736e6e;
 }
 div{
 text-align: center;
-padding: 12 px}
+padding-top: 50 px
+margin: 15px}
 {% endblock %}
 
 {%  block content %}
@@ -48,8 +49,8 @@ padding: 12 px}
     let a = true;
 function addSection () {
 
-    let template = `<div id="section ${i}" style="border:2px solid black; border-radius: 25px; background-color: black; margin-bottom: 15px">
-<h5 style="display: inline;">Event ${i + 1} </h5> <input type="button" onclick=removeSection(this) value="Remove section" name="${i}" style="width: fit-content; background-color: black" > <br>
+    let template = `<br><div id="section ${i}" style="border:2px solid black; border-radius: 25px; background-color: black; margin-bottom: 15px">
+<br><h5 style="display: inline;">Event ${i + 1} </h5> <input type="button" onclick=removeSection(this) value="Remove section" name="${i}" style="width: fit-content; background-color: black" > <br>
 
     <label for="${i}/start">Start</label><br>
     <input type="datetime-local" id="${i}/start" name="${i}/start" required><br>
