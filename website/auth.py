@@ -94,6 +94,10 @@ def class_add():
                 m = 'The end time must be after the start time'
                 valid = False
                 break
+            elif start_time.min%30!=0 or end_time.min%30!=0:
+                m = 'Times must be inputted in 30 minute increments'
+                valid = False
+                break
 
         if valid:
             course = request.form.get("class")
@@ -122,6 +126,10 @@ def event_add():
             end = datetime.strptime(request.form.get(f"{i}/end"), '%Y-%m-%dT%H:%M')
             if start > end:
                 flash('Event must start before it ends', category='error')
+                valid = False
+                break
+            elif start.min%30!=0 or end.min%30!=0:
+                flash('Times must be inputted in 30 minute increments', category='error')
                 valid = False
                 break
         if valid:
