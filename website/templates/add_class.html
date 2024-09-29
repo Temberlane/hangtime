@@ -15,10 +15,12 @@ input[type="checkbox"]{
     width: 5%;}
 h5 {padding-top:  30px;
     text-align: center;}
+
 input[type="button"]{
 margin-bottom: 15px;
 background-color: rgb(158, 236, 255);
 }
+
 input[type="color"]{
 width: 25%;
 background-color: #736e6e;
@@ -68,7 +70,7 @@ function addSection () {
     let template = `<div id="section ${i}" style="border:2px solid ${colors[0]}; border-radius: 25px; background-color: ${colors[1]}; margin-bottom: 15px">
 <h5 style="display: inline;">Section ${i+1} </h5> <input type="button" onclick=removeSection(this) value="Remove section" name="${i}" style="width: fit-content; background-color: ${colors[2]}" > <br>
      <label for="type">Choose the type:</label>
-<select id="type" name="${i}/type" required>
+<select id="type" name="${i}/type" style="background-color: ${colors[2]};" required>
   <option value="Lecture">Lecture</option>
   <option value="Lab">Lab</option>
   <option value="Tutorial">Tutorial</option>
@@ -76,16 +78,16 @@ function addSection () {
 </select><br>
 
     <label for="day">First day</label><br>
-    <input type="date" id="${i}/fday" name="${i}/fday" required><br>
+    <input type="date" id="${i}/fday" name="${i}/fday" required style="background-color: ${colors[3]}; border: ${colors[4]}"><br>
 
     <label for="day">Last day</label><br>
-    <input type="date" id="${i}/lday" name="${i}/lday" required><br>
+    <input type="date" id="${i}/lday" name="${i}/lday" required style="background-color: ${colors[3]}; border: ${colors[4]}"><br>
 
     <label for="stime">Start time</label><br>
-    <input type="time" id="${i}/stime" name="${i}/stime" required><br>
+    <input type="time" id="${i}/stime" name="${i}/stime" required style="background-color: ${colors[3]}; border: ${colors[4]}"><br>
 
     <label for="etime">End time</label><br>
-    <input type="time" id="${i}/etime" name="${i}/etime" required><br>
+    <input type="time" id="${i}/etime" name="${i}/etime" required style="background-color: ${colors[3]}; border: ${colors[4]}"><br>
 
     <input type="checkbox" id="${i}/biweekly" name="${i}/biweekly" value=true>
     <label for="biweekly"> Biweekly?</label><br>`;
@@ -172,16 +174,27 @@ function addSection () {
         const hsl = rgbToHsl(rgb);
         const b_hsl =  `hsl(${hsl[0]}, ${Math.round(hsl[1])+12}%, ${Math.round(hsl[2])+12}%)`
         const bu_hsl = `hsl(${hsl[0]}, ${Math.round(hsl[1])+12}%, ${Math.round(hsl[2])+4}%)`
-        const hsl_s =  `hsl(${hsl[0]}, ${Math.round(hsl[1])}%, ${Math.round(hsl[2])}%)`
+        const s_hsl =  `hsl(${hsl[0]}, ${Math.round(hsl[1])}%, ${Math.round(hsl[2])}%)`
+        const input_hsl = `hsl(${hsl[0]}, ${Math.round(hsl[1])-30}%, ${Math.round(hsl[2])+8}%)`
+        const inputb_hsl = `hsl(${hsl[0]}, ${Math.round(hsl[1])-45}%, ${Math.round(hsl[2])+10}%)`
 
         var divs = document.getElementsByTagName("div");
         for (const div of divs) {
             var section_id = parseInt(div.id.split(" ")[1]);
             if (div.id.includes("section") && div.id !== "section-container") {
-                div.style.border = `2px solid ${hsl_s}`
+                div.style.border = `2px solid ${s_hsl}`
                 div.style.backgroundColor = b_hsl
                 button = document.getElementsByName(`${section_id}`)[0]
                 button.style.backgroundColor = bu_hsl
+                var inputs = div.children
+                for (const j of inputs) {
+                        if (j.name && (j.name.length) > 1) {
+                            j.style.backgroundColor = input_hsl
+                            j.style.border = `2px solid ${inputb_hsl}`
+                        }
+
+
+                    }
 
             }
         button =  document.getElementsByName('add section')[0]
@@ -189,7 +202,7 @@ function addSection () {
 
 
         }
-        return [hsl_s, b_hsl, bu_hsl]
+        return [s_hsl, b_hsl, bu_hsl, input_hsl, inputb_hsl]
     }
 
 
