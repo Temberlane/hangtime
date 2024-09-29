@@ -55,7 +55,10 @@
       }
 
       else {
-         document.body.append(`<div></div>`)
+         let div = document.createElement('div');
+         div.innerHTML = `<div></div>`
+         main = document.getElementById('group');
+         main.appendChild(div);
       }
    }
 
@@ -66,6 +69,7 @@
       var Sunday = null
       var Monday = null
       var Tuesday = null
+      var Wednesday = null
       var Thursday = null
       var Friday = null
       var Saturday = null
@@ -104,7 +108,7 @@ let div = document.createElement('div');
       div.setAttribute('id', 'group')
       container = document.getElementsByClassName('container')[0]
       container.appendChild(div)
-      for (const divKey in ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]) {
+      for (const divKey in [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday]) {
          event_to_calender(divKey)
       }
          div.style = `display: flex`
