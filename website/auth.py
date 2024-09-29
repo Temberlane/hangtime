@@ -75,6 +75,7 @@ def logout():
 def class_add():
     if request.method == 'POST':
         num_sections = int(request.form.get("sections"))
+
         valid = True
         for i in range(num_sections):
             first_day = datetime.strptime(request.form.get(f"{i}/fday"), '%Y-%m-%d').date()
@@ -94,7 +95,7 @@ def class_add():
                 m = 'The end time must be after the start time'
                 valid = False
                 break
-            elif start_time.min%30!=0 or end_time.min%30!=0:
+            elif int(start_time.min.strftime("%M"))%30!=0 or int(end_time.min.strftime("%M"))%30!=0:
                 m = 'Times must be inputted in 30 minute increments'
                 valid = False
                 break
@@ -102,6 +103,7 @@ def class_add():
         if valid:
             course = request.form.get("class")
             prof = request.form.get("prof")
+            color = request.form.get("color") # returns hex code (as a str)
 
             for i in range(num_sections):
                 section_type = request.form.get(f"{i}/type")
@@ -128,7 +130,7 @@ def event_add():
                 flash('Event must start before it ends', category='error')
                 valid = False
                 break
-            elif start.min%30!=0 or end.min%30!=0:
+            elif int(start.min.strftime("%M"))%30!=0 or int(end.min.strftime("%M"))%30!=0:
                 flash('Times must be inputted in 30 minute increments', category='error')
                 valid = False
                 break

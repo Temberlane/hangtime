@@ -19,6 +19,10 @@ input[type="button"]{
 margin-bottom: 15px;
 background-color: #a3dce3;
 }
+input[type="color"]{
+width: 25%;
+background-color: #736e6e;
+}
 input[type="submit"]{
 background-color: #736e6e;
 }
@@ -31,6 +35,8 @@ background-color: #736e6e;
     <label for="prof">Professor</label><br>
     <input type="text" id="prof" name="prof" required><br>
     <input type="hidden" id="sectioncount" name="sections" value=0>
+    <label for="color">Color</label>
+    <input type="color" id="color" name = "color">
     <div id="section-container">
     </div>
     <input type="button" onclick=addSection() value="Add section">
@@ -65,7 +71,7 @@ function addSection () {
     <input type="time" id="${i}/etime" name="${i}/etime" required><br>
 
     <input type="checkbox" id="${i}/biweekly" name="${i}/biweekly" value=true>
-    <label for="biweekly"> Biweekly?</label><br></div>`;
+    <label for="biweekly"> Biweekly?</label><br>`;
 
     let container = document.getElementById('section-container');
     let div = document.createElement('div');
