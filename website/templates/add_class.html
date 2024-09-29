@@ -66,7 +66,7 @@ function addSection () {
         colors = colorChange(color_input.value)
     }
     let template = `<div id="section ${i}" style="border:2px solid ${colors[0]}; border-radius: 25px; background-color: ${colors[1]}; margin-bottom: 15px">
-<h5>Section ${i+1}</h5> <input type="button" onclick=removeSection(this) value="Remove section" name="${i}" style="background-color: ${colors[2]}" > <br>
+<h5 style="display: inline;">Section ${i+1} </h5> <input type="button" onclick=removeSection(this) value="Remove section" name="${i}" style="width: fit-content; background-color: ${colors[2]}" > <br>
      <label for="type">Choose the type:</label>
 <select id="type" name="${i}/type" required>
   <option value="Lecture">Lecture</option>
