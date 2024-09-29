@@ -51,7 +51,8 @@ function addSection () {
 
     let template = `<br><div id="section ${i}" style="border:2px solid black; border-radius: 25px; background-color: black; margin-bottom: 15px">
 <br><h5 style="display: inline;">Event ${i + 1} </h5> <input type="button" onclick=removeSection(this) value="Remove section" name="${i}" style="width: fit-content; background-color: black" > <br>
-
+    <label for="${i}/location">Location</label><br>
+    <input type="text" id="${i}/location" name="${i}/location"><br>
     <label for="${i}/start">Start</label><br>
     <input type="datetime-local" id="${i}/start" name="${i}/start" required><br>
 

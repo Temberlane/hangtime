@@ -108,6 +108,8 @@ def class_add():
 
             for i in range(num_sections):
                 section_type = request.form.get(f"{i}/type")
+                location = request.form.get(f"{i}/location") # may be none
+                room = request.form.get(f"{i}/room") # may be none
                 first_day = datetime.strptime(request.form.get(f"{i}/fday"), '%Y-%m-%d').date()
                 last_day = datetime.strptime(request.form.get(f"{i}/lday"), '%Y-%m-%d').date()
                 start_time = datetime.strptime(request.form.get(f"{i}/stime"), '%H:%M').time()
@@ -138,7 +140,8 @@ def event_add():
         if valid:
             flash(f'event{"s" if num_sections>1 else ""} successfully added', category='success')
             for i in range(num_sections):
-                color = request.form.get("color")
+                color = request.form.get(f"{i}/color")
+                location = request.form.get(f"{i}/location")
                 start = datetime.strptime(request.form.get(f"{i}/start"), '%Y-%m-%dT%H:%M')
                 end = datetime.strptime(request.form.get(f"{i}/end"), '%Y-%m-%dT%H:%M')
                 repeats = request.form.get(f"{i}/repeats")

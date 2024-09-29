@@ -66,6 +66,8 @@ function addSection () {
         color_input = document.getElementById("color")
         colors = colorChange(color_input.value)
     }
+    let container = document.getElementById('section-container');
+
     let template = `<div id="section ${i}" style="border:2px solid ${colors[0]}; border-radius: 25px; background-color: ${colors[1]}; margin-bottom: 15px">
 <h5 style="display: inline;">Section ${i+1} </h5> <input type="button" onclick=removeSection(this) value="Remove section" name="${i}" style="width: fit-content; background-color: ${colors[2]}" > <br>
      <label for="type">Choose the type:</label>
@@ -75,23 +77,26 @@ function addSection () {
   <option value="Tutorial">Tutorial</option>
   <option value="Other">Other</option>
 </select><br>
+    <label for="${i}/location">Location</label><br>
+    <input type="text" id="${i}/location" name="${i}/location" style="background-color: ${colors[3]}; border: ${colors[4]}"><br>
 
-    <label for="day">First day</label><br>
+    <label for="${i}/room">Room</label><br>
+    <input type="text" id="${i}/room" name="${i}/room" style="background-color: ${colors[3]}; border: ${colors[4]}"><br>
+
+    <label for="${i}/fday">First day</label><br>
     <input type="date" id="${i}/fday" name="${i}/fday" required style="background-color: ${colors[3]}; border: ${colors[4]}"><br>
 
-    <label for="day">Last day</label><br>
+    <label for="${i}/lday">Last day</label><br>
     <input type="date" id="${i}/lday" name="${i}/lday" required style="background-color: ${colors[3]}; border: ${colors[4]}"><br>
 
-    <label for="stime">Start time</label><br>
+    <label for="${i}/stime">Start time</label><br>
     <input type="time" id="${i}/stime" name="${i}/stime" required style="background-color: ${colors[3]}; border: ${colors[4]}"><br>
 
-    <label for="etime">End time</label><br>
+    <label for="${i}/etime">End time</label><br>
     <input type="time" id="${i}/etime" name="${i}/etime" required style="background-color: ${colors[3]}; border: ${colors[4]}"><br>
 
     <input type="checkbox" id="${i}/biweekly" name="${i}/biweekly" value=true>
     <label for="biweekly"> Biweekly?</label><br>`;
-
-    let container = document.getElementById('section-container');
     let div = document.createElement('div');
     div.innerHTML = template;
     container.appendChild(div);
