@@ -35,7 +35,7 @@ background-color: #a3dce3;
 <script>
     let i = 0;
 function addSection () {
-    let template = `<div id="Event ${i}">
+    let template = `<div id="section ${i}">
 <h5>Event ${i+1}</h5> <input type="button" onclick=removeSection(this) value="Remove section" name="${i}"> <br>
 
     <label for="${i}/start">Start</label><br>
@@ -94,7 +94,7 @@ function addSection () {
                     var section = div.querySelector("h5");
                     if (section) {
 
-                        section.innerText = `Section ${section_id}`;
+                        section.innerText = `Event ${section_id}`;
 
                     }
                 }
