@@ -71,6 +71,7 @@ def logout():
 
 
 @auth.route('/add-class',methods=['GET', 'POST'])
+@login_required
 def class_add():
     if request.method == 'POST':
         num_sections = int(request.form.get("sections"))
@@ -96,8 +97,7 @@ def class_add():
             return redirect(url_for('views.home'))
 
 
-
-
-
-
-    return render_template("add_class.html",user=current_user)
+@auth.route('/schedule')
+@login_required
+def view_schedule():
+    return render_template("adapted_schedule.html")
