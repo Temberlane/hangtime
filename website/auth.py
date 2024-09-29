@@ -100,4 +100,4 @@ def class_add():
 @auth.route('/schedule')
 @login_required
 def view_schedule():
-    return render_template("adapted_schedule.html")
+    return render_template("adapted_schedule.html", user=current_user)

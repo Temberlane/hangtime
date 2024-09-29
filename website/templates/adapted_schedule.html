@@ -1,10 +1,9 @@
 {% extends "base.html" %}
-{% endblock %}
 
 <head>
    
-   <title>Adapted Schedule</title>
-   <style>
+   {% block title %} Adapted Schedule {% endblock %}
+   {% block css %}
 
       #day {
          text-align: center;
@@ -21,10 +20,10 @@
       }
 
 
-   </style>
+   {% endblock %}
 </head>
 
-<body>
+{% block content %}
 
    <span style="display: flex; margin-left: 4.5%;">
       <strong id = "day"; style="border-left-width: 2px;">Sunday</strong>
@@ -38,4 +37,4 @@
 
    
 
-</body>
+{% endblock %}
