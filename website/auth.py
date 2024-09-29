@@ -3,6 +3,7 @@ from .models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
+from datetime import datetime
 
 
 auth = Blueprint('auth', __name__)
@@ -69,6 +70,34 @@ def logout():
     return redirect(url_for('auth.login'))
 
 
-@auth.route('/add-class')
+@auth.route('/add-class',methods=['GET', 'POST'])
 def class_add():
+    if request.method == 'POST':
+        num_sections = int(request.form.get("sections"))
+        valid = True
+        for i in range(num_sections):
+            first_day = datetime.strptime(request.form.get(f"{i}/fday"), '%Y-%m-%d').date()
+            last_day = datetime.strptime(request.form.get(f"{i}/lday"), '%Y-%m-%d').date()
+            if first_day.day != last_day.day:
+                flash('Section start and end days must be on the same day of the week', category='error')
+                valid = False
+                break
+        if valid:
+            course = request.form.get("class")
+            prof = request.form.get("prof")
+
+            for i in range(num_sections):
+                section_type = request.form.get(f"{i}/type")
+                first_day = request.form.get(f"{i}/fday")
+                last_day = request.form.get(f"{i}/lday")
+                start_time = request.form.get(f"{i}/stime")
+                end_time = request.form.get(f"{i}/etime")
+                biweekly = request.form.get(f"{i}/biweekly") #'true' if yes, None if no
+            return redirect(url_for('views.home'))
+
+
+
+
+
+
     return render_template("add_class.html",user=current_user)
