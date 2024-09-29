@@ -1,28 +1,99 @@
-{% extends "base.html" %} {% block title %}Login{% endblock %}
+{% extends "base.html" %} 
+{% block title %}Login{% endblock %} 
+
+{% block css %}
+body {
+  background-color: #f8f9fa; /* Light gray background */
+  height: 100%;
+  margin: 0;
+}
+
+html {
+  height: 100%;
+  margin: 0;
+}
+
+/* Set up the body and container to ensure the background fills the screen */
+.gradient-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1; /* Behind the content */
+    background: linear-gradient(135deg, #FFF5CD, #E78F81); /* Custom gradient */
+}
+
+/* Centering the form content */
+.container {
+    padding-top: 200px;
+    position: relative;
+    z-index: 1; /* Make sure the content is above the background */
+}
+
+/* Styling the form for better contrast with the background */
+form {
+    background-color: white; /* White background for the form */
+    padding: 30px;
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+  color: #007bff; /* Bootstrap primary color */
+  font-weight: 600; /* Slightly bolder font */
+}
+
+.btn-primary {
+  background-color: #007bff; /* Custom primary color */
+  border-color: #007bff;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3; /* Darker on hover */
+  border-color: #0056b3;
+}
+{% endblock %}
+
 {% block content %}
-<form method="POST">
-    <h3 align="center">Login</h3>
-    <div class="form-group">
-      <label for="email">Email Address</label>
-      <input
-        type="email"
-        class="form-control"
-        id="email"
-        name="email"
-        placeholder="Enter email"
-      />
-        </div>
-        <div class="form-group">
-        <label for="password1">Password</label>
-        <input
-            type="password"
-            class="form-control"
-            id="password"
-            name="password"
-            placeholder="Enter password"
-        />
-        </div>
-        <br />
-        <button type="submit" class="btn btn-primary">Login</button>
-  </form>
+<div class="gradient-background">
+  <div class="container">
+      <div class="row justify-content-center">
+          <div class="col-md-6">
+              <form method="POST" class="border p-4 rounded shadow">
+                  <h3 class="text-center">Login</h3>
+                  <div class="form-group">
+                      <label for="email">Email Address</label>
+                      <input
+                          type="email"
+                          class="form-control"
+                          id="email"
+                          name="email"
+                          placeholder="Enter email"
+                          required
+                      />
+                  </div>
+                  <div class="form-group">
+                      <label for="password">Password</label>
+                      <input
+                          type="password"
+                          class="form-control"
+                          id="password"
+                          name="password"
+                          placeholder="Enter password"
+                          required
+                      />
+                  </div>
+                  <div class="form-group text-center">
+                      <button type="submit" class="btn btn-primary btn-block">Login</button>
+                  </div>
+                  <div class="text-center mt-3">
+                      <small>Don't have an account? <a href="{{ url_for('auth.sign_up') }}">Register here</a></small>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
 {% endblock %}
