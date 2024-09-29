@@ -5,10 +5,11 @@
 label {font-size: large; color: black;}
 div {text-align: center;}
 input {
-  width: 100%;
+  width: 90%;
     background-color: #C5C5C5;
 border-style:solid;
 margin-bottom: 15px;
+border-radius: 5px;
 
 }
 input[type="checkbox"]{
@@ -17,11 +18,18 @@ h5 {padding-top:  30px;
     text-align: center;}
 input[type="button"]{
 margin-bottom: 15px;
-background-color: #a3dce3;
+background-color: #d4d4d4;
+}
+input[type="color"]{
+width: 25%;
+background-color: #736e6e;
 }
 input[type="submit"]{
 background-color: #736e6e;
 }
+div{
+text-align: center;
+padding: 12 px}
 {% endblock %}
 
 {%  block content %}
@@ -37,9 +45,11 @@ background-color: #736e6e;
 <!-- code for adding row from: https://mattstauffer.com/blog/a-little-trick-for-grouping-fields-in-an-html-form/ -->
 <script>
     let i = 0;
+    let a = true;
 function addSection () {
-    let template = `<div id="section ${i}">
-<h5>Event ${i+1}</h5> <input type="button" onclick=removeSection(this) value="Remove section" name="${i}"> <br>
+
+    let template = `<div id="section ${i}" style="border:2px solid black; border-radius: 25px; background-color: black; margin-bottom: 15px">
+<h5 style="display: inline;">Event ${i + 1} </h5> <input type="button" onclick=removeSection(this) value="Remove section" name="${i}" style="width: fit-content; background-color: black" > <br>
 
     <label for="${i}/start">Start</label><br>
     <input type="datetime-local" id="${i}/start" name="${i}/start" required><br>
@@ -56,7 +66,7 @@ function addSection () {
 
   </select></br>
    <label for="color">Color</label>
-    <input type="color" id="color" name = "color">
+    <input type="color" id="${i}/color" name = "${i}/color" onchange="colorChange(this.value, this.name)" value = "#90e4f9">
 
   <br><label for="${i}/notes">Notes</label><br>
     <input type="text-local" id="${i}/notes" name="${i}/notes" ><br>
@@ -68,6 +78,8 @@ function addSection () {
     container.appendChild(div);
     h = document.getElementById('sectioncount');
     h.value=parseInt(h.value)+1;
+
+    colors = colorChange('#9BE5F8', i)
 
     i++;
 }
@@ -107,7 +119,66 @@ function addSection () {
         }
 
     }
+/* hex to rgb from https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb*/
+    function hexToRgb(hex) {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+        } : null;
+    }
 
+    /* rgb to hsl from https://www.30secondsofcode.org/js/s/rgb-hex-hsl-hsb-color-format-conversion/ */
+        function rgbToHsl(a) {
+            r = a['r']/255;
+            g = a['g']/255;
+            b = a['b']/255;
+            const l = Math.max(r, g, b);
+            const s = l - Math.min(r, g, b);
+            const h = s
+                ? l === r
+                    ? (g - b) / s
+                    : l === g
+                        ? 2 + (b - r) / s
+                        : 4 + (r - g) / s
+                : 0;
+            return [
+                60 * h < 0 ? 60 * h + 360 : 60 * h,
+                100 * (s ? (l <= 0.5 ? s / (2 * l - s) : s / (2 - (2 * l - s))) : 0),
+                (100 * (2 * l - s)) / 2,
+            ];
+        };
+
+    function colorChange(c, index) {
+        if(typeof(index)=="string"){
+            index = parseInt(index.split("/")[0])
+        }
+        const rgb = hexToRgb(c)
+        const hsl = rgbToHsl(rgb);
+        const b_hsl =  `hsl(${hsl[0]}, ${Math.round(hsl[1])+12}%, ${Math.round(hsl[2])+12}%)`
+        const bu_hsl = `hsl(${hsl[0]}, ${Math.round(hsl[1])+12}%, ${Math.round(hsl[2])+4}%)`
+        const s_hsl =  `hsl(${hsl[0]}, ${Math.round(hsl[1])}%, ${Math.round(hsl[2])}%)`
+        const input_hsl = `hsl(${hsl[0]}, ${Math.round(hsl[1])-30}%, ${Math.round(hsl[2])+8}%)`
+        const inputb_hsl = `hsl(${hsl[0]}, ${Math.round(hsl[1])-45}%, ${Math.round(hsl[2])+10}%)`
+
+        const div = document.getElementById(`section ${index}`)
+        console.log(div)
+                div.style.border = `2px solid ${s_hsl}`
+                div.style.backgroundColor = b_hsl
+                button = document.getElementsByName(`${index}`)[0]
+                button.style.backgroundColor = bu_hsl
+                var inputs = div.children
+                for (const j of inputs) {
+                        if (j.name && (j.name.length) > 1) {
+                            j.style.backgroundColor = input_hsl
+                            j.style.border = `2px solid ${inputb_hsl}`
+                        }
+
+
+                    }
+         return [s_hsl, b_hsl, bu_hsl, input_hsl, inputb_hsl]
+    }
 
 </script>
 {% endblock %}
