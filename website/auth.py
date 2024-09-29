@@ -75,27 +75,79 @@ def logout():
 def class_add():
     if request.method == 'POST':
         num_sections = int(request.form.get("sections"))
+
         valid = True
         for i in range(num_sections):
             first_day = datetime.strptime(request.form.get(f"{i}/fday"), '%Y-%m-%d').date()
             last_day = datetime.strptime(request.form.get(f"{i}/lday"), '%Y-%m-%d').date()
-            if first_day.day != last_day.day:
-                flash('Section start and end days must be on the same day of the week', category='error')
+            start_time = datetime.strptime(request.form.get(f"{i}/stime"), '%H:%M').time()
+            end_time = datetime.strptime(request.form.get(f"{i}/etime"), '%H:%M').time()
+
+            if first_day.weekday() != last_day.weekday():
+                m = 'Section start and end days must be on the same day of the week'
                 valid = False
                 break
+            elif first_day > last_day:
+                m = 'The first day must be before the last day'
+                valid = False
+                break
+            elif start_time > end_time:
+                m = 'The end time must be after the start time'
+                valid = False
+                break
+            elif int(start_time.min.strftime("%M"))%30!=0 or int(end_time.min.strftime("%M"))%30!=0:
+                m = 'Times must be inputted in 30 minute increments'
+                valid = False
+                break
+
         if valid:
             course = request.form.get("class")
             prof = request.form.get("prof")
+            color = request.form.get("color") # gives hex code (as a str)
+            flash("class successfully added", category='success')
 
             for i in range(num_sections):
                 section_type = request.form.get(f"{i}/type")
-                first_day = request.form.get(f"{i}/fday")
-                last_day = request.form.get(f"{i}/lday")
-                start_time = request.form.get(f"{i}/stime")
-                end_time = request.form.get(f"{i}/etime")
+                location = request.form.get(f"{i}/location") # may be none
+                room = request.form.get(f"{i}/room") # may be none
+                first_day = datetime.strptime(request.form.get(f"{i}/fday"), '%Y-%m-%d').date()
+                last_day = datetime.strptime(request.form.get(f"{i}/lday"), '%Y-%m-%d').date()
+                start_time = datetime.strptime(request.form.get(f"{i}/stime"), '%H:%M').time()
+                end_time = datetime.strptime(request.form.get(f"{i}/etime"), '%H:%M').time()
                 biweekly = request.form.get(f"{i}/biweekly") #'true' if yes, None if no
             return redirect(url_for('views.home'))
+        else:
+            flash(m, category='error')
     return render_template("add_class.html", user=current_user)
+
+@auth.route('/add-events',methods=['GET', 'POST'])
+@login_required
+def event_add():
+    if request.method == 'POST':
+        num_sections = int(request.form.get("sections"))
+        valid = True
+        for i in range(num_sections):
+            start = datetime.strptime(request.form.get(f"{i}/start"), '%Y-%m-%dT%H:%M')
+            end = datetime.strptime(request.form.get(f"{i}/end"), '%Y-%m-%dT%H:%M')
+            if start > end:
+                flash('Event must start before it ends', category='error')
+                valid = False
+                break
+            elif int(start.min.strftime("%M"))%30!=0 or int(end.min.strftime("%M"))%30!=0:
+                flash('Times must be inputted in 30 minute increments', category='error')
+                valid = False
+                break
+        if valid:
+            flash(f'event{"s" if num_sections>1 else ""} successfully added', category='success')
+            for i in range(num_sections):
+                color = request.form.get(f"{i}/color")
+                location = request.form.get(f"{i}/location")
+                start = datetime.strptime(request.form.get(f"{i}/start"), '%Y-%m-%dT%H:%M')
+                end = datetime.strptime(request.form.get(f"{i}/end"), '%Y-%m-%dT%H:%M')
+                repeats = request.form.get(f"{i}/repeats")
+                notes = request.form.get(f"{i}/notes")
+            return redirect(url_for('views.home'))
+    return render_template("add_events.html", user=current_user)
 
 
 @auth.route('/schedule')

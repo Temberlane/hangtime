@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}Input Schedule{% endblock %}
+{% block title %}Input Events{% endblock %}
 {% block css %}
 label {font-size: large; color: black;}
+div {text-align: center;}
 input {
   width: 90%;
-    background-color: #FFFFFFF;
+    background-color: #C5C5C5;
 border-style:solid;
 margin-bottom: 15px;
 border-radius: 5px;
@@ -15,12 +16,10 @@ input[type="checkbox"]{
     width: 5%;}
 h5 {padding-top:  30px;
     text-align: center;}
-
 input[type="button"]{
 margin-bottom: 15px;
-background-color: rgb(158, 236, 255);
+background-color: #d4d4d4;
 }
-
 input[type="color"]{
 width: 25%;
 background-color: #736e6e;
@@ -28,31 +27,23 @@ background-color: #736e6e;
 input[type="submit"]{
 background-color: #736e6e;
 }
-
 div{
 text-align: center;
-padding: 12 px}
+padding-top: 50 px
+margin: 15px}
 
-/* code for required asterisk from: https://stackoverflow.com/questions/11197671/use-css-to-automatically-add-required-field-asterisk-to-form-inputs */
 .required:after {
     content:" *";
     color: red;
   }
 {% endblock %}
 
-
 {%  block content %}
 <form method="POST">
-    <label for="class" class="required">Course code</label><br>
-    <input type="text" id="class" name="class" required><br>
-    <label for="prof" class="required">Professor</label><br>
-    <input type="text" id="prof" name="prof" required ><br>
     <input type="hidden" id="sectioncount" name="sections" value=0>
-    <label for="color">Color</label>
-    <input type="color" id="color" name = "color" onchange="colorChange(this.value)" value = "#90e4f9" style="border: 2px solid #FFFFFF">
     <div id="section-container">
     </div>
-    <input type="button" onclick=addSection() value="Add section" name="add section">
+    <input type="button" onclick=addSection() value="Add event">
     <input type="submit" value="Submit">
 
 </form>
@@ -62,50 +53,40 @@ padding: 12 px}
     let i = 0;
     let a = true;
 function addSection () {
-    if(a){
-        colors = colorChange('#9BE5F8')
-        a = false;
-    }
-    else{
-        color_input = document.getElementById("color")
-        colors = colorChange(color_input.value)
-    }
-    let container = document.getElementById('section-container');
 
-    let template = `<div id="section ${i}" style="border:2px solid ${colors[0]}; border-radius: 25px; background-color: ${colors[1]}; margin-bottom: 15px">
-<h5 style="display: inline;">Section ${i+1} </h5> <input type="button" onclick=removeSection(this) value="Remove section" name="${i}" style="width: fit-content; background-color: ${colors[2]}" > <br>
-     <label for="type" class="required">Choose the type:</label>
-<select id="type" name="${i}/type" style="background-color: ${colors[2]};" required>
-  <option value="Lecture">Lecture</option>
-  <option value="Lab">Lab</option>
-  <option value="Tutorial">Tutorial</option>
-  <option value="Other">Other</option>
-</select><br>
+    let template = `<br><div id="section ${i}" style="border:2px solid black; border-radius: 25px; background-color: black; margin-bottom: 15px">
+<br><h5 style="display: inline;">Event ${i + 1} </h5> <input type="button" onclick=removeSection(this) value="Remove section" name="${i}" style="width: fit-content; background-color: black" > <br>
     <label for="${i}/location">Location</label><br>
-    <input type="text" id="${i}/location" name="${i}/location" style="border: 2px solid ${colors[2]}"><br>
+    <input type="text" id="${i}/location" name="${i}/location"><br>
+    <label for="${i}/start" class="required">Start</label><br>
+    <input type="datetime-local" id="${i}/start" name="${i}/start" required><br>
 
-    <label for="${i}/room">Room</label><br>
-    <input type="text" id="${i}/room" name="${i}/room" style="border: 2px solid ${colors[2]}"><br>
+    <label for="${i}/end" class="required">End</label><br>
+    <input type="datetime-local" id="${i}/end" name="${i}/end" required><br>
 
-    <label for="${i}/fday" class="required">First day</label><br>
-    <input type="date" id="${i}/fday" name="${i}/fday" required style="border: 2px solid ${colors[2]}"><br>
+    <label for="${i}/repeats" class="required"> Repeats?</label>
+<select id="${i}/repeats" name="${i}/repeats" required>
+  <option value="None">Does Not Repeat</option>
+  <option value="Daily">Daily</option>
+  <option value="Weekly">Weekly</option>
+  <option value="Monthly">Monthly</option>
 
-    <label for="${i}/lday" class="required">Last day</label><br>
-    <input type="date" id="${i}/lday" name="${i}/lday" required style="border: 2px solid ${colors[2]}"><br>
+  </select></br>
+   <label for="color">Color</label>
+    <input type="color" id="${i}/color" name = "${i}/color" onchange="colorChange(this.value, this.name)" value = "#90e4f9">
 
-    <label for="${i}/stime" class="required">Start time</label><br>
-    <input type="time" id="${i}/stime" name="${i}/stime" required style="border: 2px solid ${colors[2]}"><br>
+  <br><label for="${i}/notes">Notes</label><br>
+    <input type="text-local" id="${i}/notes" name="${i}/notes" ><br>
+</div>`;
 
-    <label for="${i}/etime" class="required">End time</label><br>
-    <input type="time" id="${i}/etime" name="${i}/etime" required style="border: 2px solid ${colors[2]}"><br>
-
-    <input type="checkbox" id="${i}/biweekly" name="${i}/biweekly" value=true>
-    <label for="biweekly"> Biweekly?</label><br>`;
+    let container = document.getElementById('section-container');
     let div = document.createElement('div');
     div.innerHTML = template;
     container.appendChild(div);
     h = document.getElementById('sectioncount');
     h.value=parseInt(h.value)+1;
+
+    colors = colorChange('#9BE5F8', i)
 
     i++;
 }
@@ -137,15 +118,14 @@ function addSection () {
                     var section = div.querySelector("h5");
                     if (section) {
 
-                        section.innerText = `Section ${section_id}`;
+                        section.innerText = `Event ${section_id}`;
 
                     }
                 }
             }
         }
 
-
-}
+    }
 /* hex to rgb from https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb*/
     function hexToRgb(hex) {
         var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -177,7 +157,10 @@ function addSection () {
             ];
         };
 
-    function colorChange(c) {
+    function colorChange(c, index) {
+        if(typeof(index)=="string"){
+            index = parseInt(index.split("/")[0])
+        }
         const rgb = hexToRgb(c)
         const hsl = rgbToHsl(rgb);
         const b_hsl =  `hsl(${hsl[0]}, ${Math.round(hsl[1])+12}%, ${Math.round(hsl[2])+12}%)`
@@ -186,33 +169,23 @@ function addSection () {
         const input_hsl = `hsl(${hsl[0]}, ${Math.round(hsl[1])-30}%, ${Math.round(hsl[2])+8}%)`
         const inputb_hsl = `hsl(${hsl[0]}, ${Math.round(hsl[1])-45}%, ${Math.round(hsl[2])+10}%)`
 
-        var divs = document.getElementsByTagName("div");
-        for (const div of divs) {
-            var section_id = parseInt(div.id.split(" ")[1]);
-            if (div.id.includes("section") && div.id !== "section-container") {
+        const div = document.getElementById(`section ${index}`)
+        console.log(div)
                 div.style.border = `2px solid ${s_hsl}`
                 div.style.backgroundColor = b_hsl
-                button = document.getElementsByName(`${section_id}`)[0]
+                button = document.getElementsByName(`${index}`)[0]
                 button.style.backgroundColor = bu_hsl
                 var inputs = div.children
                 for (const j of inputs) {
                         if (j.name && (j.name.length) > 1) {
-                            j.style.backgroundColor = "#FFFFFF"
-                            j.style.border = `2px solid ${bu_hsl}`
+                            j.style.backgroundColor = input_hsl
+                            j.style.border = `2px solid ${inputb_hsl}`
                         }
 
 
                     }
-
-            }
-        button =  document.getElementsByName('add section')[0]
-            button.style.backgroundColor = bu_hsl
-
-
-        }
-        return [s_hsl, b_hsl, bu_hsl, input_hsl, inputb_hsl]
+         return [s_hsl, b_hsl, bu_hsl, input_hsl, inputb_hsl]
     }
-
 
 </script>
 {% endblock %}
