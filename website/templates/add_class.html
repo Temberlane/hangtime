@@ -44,12 +44,12 @@ padding: 12 px}
 {%  block content %}
 <form method="POST">
     <label for="class" class="required">Course code</label><br>
-    <input type="text" id="class" name="class" required><br>
+    <input type="text" id="class" name="class" required placeholder='XXX 0000' value="{{form_data['class'] if form_data else ''}}"><br>
     <label for="prof" class="required">Professor</label><br>
-    <input type="text" id="prof" name="prof" required ><br>
+    <input type="text" id="prof" name="prof" required value="{{form_data['prof'][0] if form_data else ''}}"><br>
     <input type="hidden" id="sectioncount" name="sections" value=0>
     <label for="color">Color</label>
-    <input type="color" id="color" name = "color" onchange="colorChange(this.value)" value = "#90e4f9" style="border: 2px solid #FFFFFF">
+    <input type="color" id="color" name = "color" onchange="colorChange(this.value)" value = "{{form_data['color'] if form_data else '#90e4f9'}}" style="border: 2px solid #FFFFFF">
     <div id="section-container">
     </div>
     <input type="button" onclick=addSection() value="Add section" name="add section">
@@ -61,45 +61,58 @@ padding: 12 px}
 <script>
     let i = 0;
     let a = true;
+    var data = {{ form_data | tojson }}
 function addSection () {
-    if(a){
+    if(a && !data){
         colors = colorChange('#9BE5F8')
         a = false;
+    }
+    else if(a){
+        colors = colorChange(data['color'])
     }
     else{
         color_input = document.getElementById("color")
         colors = colorChange(color_input.value)
     }
     let container = document.getElementById('section-container');
+    let type = data[i.toString()+'/type'];
+    let location = data[i.toString()+'/location'];
+    let room = data[i.toString()+'/room'];
+    let fday = data[i.toString()+'/fday'];
+    let lday = data[i.toString()+'/lday'];
+    let stime = data[i.toString()+'/stime'];
+    let etime =data[i.toString()+'/etime'];
+    let biweekly = data[i.toString()+'/biweekly'];
 
-    let template = `<div id="section ${i}" style="border:2px solid ${colors[0]}; border-radius: 25px; background-color: ${colors[1]}; margin-bottom: 15px">
+    let template =
+    `<div id="section ${i}" style="border:2px solid ${colors[0]}; border-radius: 25px; background-color: ${colors[1]}; margin-bottom: 15px">
 <h5 style="display: inline;">Section ${i+1} </h5> <input type="button" onclick=removeSection(this) value="Remove section" name="${i}" style="width: fit-content; background-color: ${colors[2]}" > <br>
      <label for="type" class="required">Choose the type:</label>
-<select id="type" name="${i}/type" style="background-color: ${colors[2]};" required>
+<select id="type" name="${i}/type" style="background-color: #FFFFFF;" required>
   <option value="Lecture">Lecture</option>
-  <option value="Lab">Lab</option>
-  <option value="Tutorial">Tutorial</option>
-  <option value="Other">Other</option>
+  <option value="Lab" selected=${(type === "Lab")}>Lab</option>
+  <option value="Tutorial" selected=${(type === "Tutorial")}>Tutorial</option>
+  <option value="Other" selected=${type==="Other"}>Other</option>
 </select><br>
     <label for="${i}/location">Location</label><br>
-    <input type="text" id="${i}/location" name="${i}/location" style="border: 2px solid ${colors[2]}"><br>
+    <input type="text" id="${i}/location" name="${i}/location" style="border: 2px solid ${colors[2]}" value=${location !== null ? location: ''}><br>
 
     <label for="${i}/room">Room</label><br>
-    <input type="text" id="${i}/room" name="${i}/room" style="border: 2px solid ${colors[2]}"><br>
+    <input type="text" id="${i}/room" name="${i}/room" value=${room !== null ? room: ''} style="border: 2px solid ${colors[2]}" ><br>
 
     <label for="${i}/fday" class="required">First day</label><br>
-    <input type="date" id="${i}/fday" name="${i}/fday" required style="border: 2px solid ${colors[2]}"><br>
+    <input type="date" id="${i}/fday" name="${i}/fday" required value=${fday !== null ? fday: ''} style="border: 2px solid ${colors[2]}" ><br>
 
     <label for="${i}/lday" class="required">Last day</label><br>
-    <input type="date" id="${i}/lday" name="${i}/lday" required style="border: 2px solid ${colors[2]}"><br>
+    <input type="date" id="${i}/lday" name="${i}/lday" required value=${lday !== null ? lday: ''} style="border: 2px solid ${colors[2]}" ><br>
 
     <label for="${i}/stime" class="required">Start time</label><br>
-    <input type="time" id="${i}/stime" name="${i}/stime" required style="border: 2px solid ${colors[2]}"><br>
+    <input type="time" id="${i}/stime" name="${i}/stime" value=${stime !== null ? stime: ''} required style="border: 2px solid ${colors[2]}" ><br>
 
     <label for="${i}/etime" class="required">End time</label><br>
-    <input type="time" id="${i}/etime" name="${i}/etime" required style="border: 2px solid ${colors[2]}"><br>
+    <input type="time" id="${i}/etime" name="${i}/etime" required value=${etime !== null ? etime: ''} style="border: 2px solid ${colors[2]}"  ><br>
 
-    <input type="checkbox" id="${i}/biweekly" name="${i}/biweekly" value=true>
+    <input type="checkbox" id="${i}/biweekly" name="${i}/biweekly" value=true checked=${biweekly !== null ? 'checked': ''}>
     <label for="biweekly"> Biweekly?</label><br>`;
     let div = document.createElement('div');
     div.innerHTML = template;
@@ -109,8 +122,15 @@ function addSection () {
 
     i++;
 }
-
-    addSection()
+    if(data){
+        console.log("{{form_data['sections'][0]}}")
+        for (let j = 0; j < "{{form_data['sections'][0]}}"; j++) {
+            addSection()
+        }
+    }
+    else {
+        addSection()
+    }
 
     function removeSection(k) {
     i--;

@@ -120,7 +120,8 @@ def class_add():
             return redirect(url_for('views.home'))
         else:
             flash(m, category='error')
-            return render_template("add_class.html", user=current_user, form_data=request.form)
+            print(request.form.to_dict())
+            return render_template("add_class.html", user=current_user, form_data= request.form.to_dict())
     return render_template("add_class.html", user=current_user)
 
 @auth.route('/add-events',methods=['GET', 'POST'])
