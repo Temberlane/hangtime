@@ -69,6 +69,23 @@ def logout():
     return redirect(url_for('auth.login'))
 
 
-@auth.route('/add-class')
+@auth.route('/add-class',methods=['GET', 'POST'])
 def class_add():
+    if request.method == 'POST':
+        course = request.form.get("class")
+        prof = request.form.get("prof")
+        num_sections = int(request.form.get("sections"))
+        for i in range(num_sections):
+            section_type = request.form.get(f"{i}/type")
+            first_day = request.form.get(f"{i}/fday")
+            last_day = request.form.get(f"{i}/lday")
+            start_time = request.form.get(f"{i}/stime")
+            end_time = request.form.get(f"{i}/etime")
+            biweekly = request.form.get(f"{i}/biweekly") #'true' if yes, None if no
+
+
+
+
+
+
     return render_template("add_class.html",user=current_user)
