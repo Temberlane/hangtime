@@ -103,7 +103,7 @@ def class_add():
         if valid:
             course = request.form.get("class")
             prof = request.form.get("prof")
-            color = request.form.get("color") # returns hex code (as a str)
+            color = request.form.get("color") # gives hex code (as a str)
 
             for i in range(num_sections):
                 section_type = request.form.get(f"{i}/type")
@@ -136,6 +136,7 @@ def event_add():
                 break
         if valid:
             for i in range(num_sections):
+                color = request.form.get("color")
                 start = datetime.strptime(request.form.get(f"{i}/start"), '%Y-%m-%dT%H:%M')
                 end = datetime.strptime(request.form.get(f"{i}/end"), '%Y-%m-%dT%H:%M')
                 repeats = request.form.get(f"{i}/repeats")
