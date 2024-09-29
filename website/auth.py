@@ -95,6 +95,7 @@ def class_add():
                 end_time = request.form.get(f"{i}/etime")
                 biweekly = request.form.get(f"{i}/biweekly") #'true' if yes, None if no
             return redirect(url_for('views.home'))
+    return render_template("add_class.html", user=current_user)
 
 
 @auth.route('/schedule')
