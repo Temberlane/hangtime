@@ -160,4 +160,4 @@ def event_add():
 @auth.route('/schedule')
 @login_required
 def view_schedule():
-    return render_template("adapted_schedule.html", user=current_user)
+    return render_template("adapted_schedule.html", user=current_user, events=[{"color": "9BE5F8", "len": 1, "day":"Monday", "time":5, "details": "sleep"}])

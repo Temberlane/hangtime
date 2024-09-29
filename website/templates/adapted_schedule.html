@@ -41,16 +41,21 @@
       <strong id = "day"; style="border-right-width: 2px;">Saturday</strong>
    </span>
 
-{% endblock %}
+
 
 <script>
    function event_to_calender(event) {
       if (event != null) {
-         document.append.body(<div style="background-color: ${event.color}">event.details</div>)
+         let div = document.createElement('div');
+         div.innerHTML = `<div style="background-color: ${event["color"]}"> sleep</div>`
+         main = document.getElementById('group');
+         main.appendChild(div);
+
+
       }
 
       else {
-         document.body.append(<div></div>)
+         document.body.append(`<div></div>`)
       }
    }
 
@@ -66,42 +71,44 @@
       var Saturday = null
 
 
-      for (let event in events) {
-         if (event.time == i){
 
-            if (event.day == "Sunday") {
+      console.log('{{events | tojson}}');
+      for (let event in '{{events}}') {
+         if (event["time"] == i){
+
+            if (event["day"] == "Sunday") {
                Sunday = event
             }
-            else if (event.day == "Monday") {
+            else if (event["day"] == "Monday") {
                Monday = event
             }
-            else if (event.day == "Tuesday") {
+            else if (event["day"]== "Tuesday") {
                Tuesday = event
             }
-            else if (event.day == "Wednesday") {
+            else if (event["day"] == "Wednesday") {
                Wednesday = event
             }
-            else if (event.day == "Thursday") {
+            else if (event["day"] == "Thursday") {
                Thursday = event
             }
-            else if (event.day == "Sunday") {
-               Sunday = event
+            else if (event["day"] == "Friday") {
+               Friday = event
             }
             else {
-               Sunday = event
+               Saturday = event
             }
          }
 
       }
+let div = document.createElement('div');
+      div.setAttribute('id', 'group')
+      container = document.getElementsByClassName('container')[0]
+      container.appendChild(div)
+      for (const divKey in ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]) {
+         event_to_calender(divKey)
+      }
+         div.style = `display: flex`
 
-      document.body.append(<span style="display: flex"> event_to_calender(Sunday);
-      event_to_calender(Monday);
-      event_to_calender(Tuesday);
-      event_to_calender(Wednesday);
-      event_to_calender(Thursday);
-      event_to_calender(Friday);
-      event_to_calender(Saturday);
-      </span>)
       
 
       i = i + 0.5;
@@ -110,3 +117,4 @@
 
 
 </script>
+{% endblock %}
