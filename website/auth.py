@@ -104,6 +104,7 @@ def class_add():
             course = request.form.get("class")
             prof = request.form.get("prof")
             color = request.form.get("color") # gives hex code (as a str)
+            flash("class successfully added", category='success')
 
             for i in range(num_sections):
                 section_type = request.form.get(f"{i}/type")
@@ -114,7 +115,7 @@ def class_add():
                 biweekly = request.form.get(f"{i}/biweekly") #'true' if yes, None if no
             return redirect(url_for('views.home'))
         else:
-            flash('m', category='error')
+            flash(m, category='error')
     return render_template("add_class.html", user=current_user)
 
 @auth.route('/add-events',methods=['GET', 'POST'])
@@ -135,6 +136,7 @@ def event_add():
                 valid = False
                 break
         if valid:
+            flash(f'event{"s" if num_sections>1 else ""} successfully added', category='success')
             for i in range(num_sections):
                 color = request.form.get("color")
                 start = datetime.strptime(request.form.get(f"{i}/start"), '%Y-%m-%dT%H:%M')
